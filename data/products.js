@@ -469,4 +469,37 @@ const productsData = [
     priceCents: 2400,
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
+  {
+    id: "bc2847e9-44321-403f-b7cf-57fde044a955",
+    image: "images/products/backpack.jpg",
+    name: "Men's Hiking Backpack",
+    rating: {
+      stars: 2.5,
+      count: 1024,
+    },
+    priceCents: 1200,
+    keywords: ["backpack", "mens"],
+  },
+  {
+    id: "bc2847e9-5323-403f-b69f-57fde044a955",
+    image: "images/products/umbrella.jpg",
+    name: "Adult Full-Sized Umbrella",
+    rating: {
+      stars: 3.5,
+      count: 223,
+    },
+    priceCents: 2400,
+    keywords: ["apparel", "mens"],
+  },
+  {
+    id: "bc2847e9-5323-403f-b69f-57fd81263",
+    image: "images/products/bao.png",
+    name: "Bao",
+    rating: {
+      stars: 5,
+      count: 826,
+    },
+    priceCents: 6900,
+    keywords: ["bao"],
+  },
 ];
