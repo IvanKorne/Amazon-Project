@@ -1,5 +1,6 @@
 let productsHTML = "";
 
+//Adding Body to HTML
 productsData.forEach((product) => {
   productsHTML += `<div class="product-container">
     <div class="product-image-container">
@@ -47,7 +48,7 @@ productsData.forEach((product) => {
       Added
     </div>
 
-    <button class="add-to-cart-button button-primary js-add-cart data-product ="${
+    <button class="add-to-cart-button button-primary js-add-cart" data-product-id ="${
       product.id
     }">Add to Cart</button>
   </div>`;
@@ -62,11 +63,12 @@ const addButtons = document.querySelectorAll("js-add-cart");
 
 addButtons.forEach((buttons) => {
   buttons.addEventListener("click", () => {
-    const productID = button.dataset.product;
+    const productID = button.dataset.productId;
+
     let addProduct;
 
     cart.forEach((product) => {
-      if (productID === product.productID) {
+      if (productId === product.productId) {
         addProduct = product;
       }
     });
@@ -75,9 +77,16 @@ addButtons.forEach((buttons) => {
       addProduct.quantity++;
     } else {
       cart.push({
-        productID: productID,
+        productId: productId,
         quantity: 1,
       });
     }
+    console.log(cart);
+
+    let cartQuantity = 0;
+    cart.forEach((item) => {
+      cartQuantity += item.quantity;
+    });
+    document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
   });
 });
