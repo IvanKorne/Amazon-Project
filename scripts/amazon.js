@@ -5,6 +5,8 @@ import {
   addedNoti,
 } from "../data/cart.js";
 import { productsData } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
+
 let productsHTML = "";
 
 //Adding Body to HTML
@@ -31,7 +33,7 @@ productsData.forEach((product) => {
       }</div>
     </div>
 
-    <div class="product-price">$${(product.priceCents / 100).toFixed(2)}</div>
+    <div class="product-price">$${formatCurrency(product.priceCents)}</div>
 
     <div class="product-quantity-container">
       <select class='js-quantity-select-${product.id}'>
