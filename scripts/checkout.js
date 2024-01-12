@@ -1,4 +1,9 @@
-import { cart, removeItem } from "../data/cart.js";
+import {
+  cart,
+  removeItem,
+  updateCartQuantity,
+  saveUpdate,
+} from "../data/cart.js";
 import { productsData } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
@@ -31,12 +36,18 @@ cart.forEach((cartItem) => {
           matchingItem.priceCents
         )}</div>
         <div class="product-quantity">
-          <span> Quantity: <span class="quantity-label">${
+          <span> Quantity: <span class="quantity-label js-quantity">${
             cartItem.quantity
           }</span> </span>
-          <span class="update-quantity-link link-primary">
+          <span class="update-quantity-link link-primary js-update" data-product-id ="${
+            matchingItem.id
+          }">
             Update
           </span>
+          <input class='quantity-input js-quantity-${matchingItem.id}'>
+          <span class='save-quantity-link link-primary js-save' data-product-id ="${
+            matchingItem.id
+          }">Save</span>
           <span class="delete-quantity-link link-primary js-delete" data-product-id ="${
             matchingItem.id
           }">
@@ -91,7 +102,9 @@ cart.forEach((cartItem) => {
 
 // Puts HTML into checkout page via DOM
 document.querySelector(".js-order").innerHTML = checkoutHTML;
+updateCartQuantity("items");
 
+//Makes Delte buttons interactive
 let deleteButtons = document.querySelectorAll(".js-delete");
 deleteButtons.forEach((deleteButton) => {
   deleteButton.addEventListener("click", () => {
@@ -102,5 +115,27 @@ deleteButtons.forEach((deleteButton) => {
       `.js-cart-container-${productId}`
     );
     containter.remove();
+    updateCartQuantity("items");
+  });
+});
+
+let updateButtons = document.querySelectorAll(".js-update");
+updateButtons.forEach((updateButton) => {
+  updateButton.addEventListener("click", () => {
+    const { productId } = updateButton.dataset;
+    const container = document.querySelector(`.js-cart-container-${productId}`);
+    container.classList.add("is-editing-quantity");
+  });
+});
+
+let saveButtons = document.querySelectorAll(".js-save");
+saveButtons.forEach((saveButton) => {
+  saveButton.addEventListener("click", () => {
+    saveUpdate(saveButton);
+  });
+  document.body.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      saveUpdate(saveButton);
+    }
   });
 });

@@ -65,6 +65,7 @@ productsData.forEach((product) => {
 
 // Puts the HTML onto the website using DOM format.
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
+updateCartQuantity("cart-quantity");
 
 let addButtons = document.querySelectorAll(`.js-add-cart`);
 const timeoutList = {};
@@ -74,7 +75,7 @@ addButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const { productId } = button.dataset;
     addToCart(productId);
-    updateCartQuantity();
+    updateCartQuantity("cart-quantity");
     addedNoti(productId, timeoutList);
   });
 });

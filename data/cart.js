@@ -35,12 +35,12 @@ export function addToCart(productId) {
 }
 
 // updates the cart quantity on the top of page
-export function updateCartQuantity() {
+export function updateCartQuantity(title) {
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   });
-  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+  document.querySelector(`.js-${title}`).innerHTML = cartQuantity;
 }
 
 //Adds a notification each time an item is added
@@ -81,4 +81,29 @@ export function removeItem(productId) {
 
 function saveStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+export function calcCartQuantity(productId, newQuantity) {
+  cart.forEach((cartItem) => {
+    if (cartItem.productId === productId) {
+      cartItem.quantity = newQuantity;
+    }
+  });
+  saveStorage();
+}
+
+export function saveUpdate(saveButton) {
+  const { productId } = saveButton.dataset;
+  const container = document.querySelector(`.js-cart-container-${productId}`);
+  const amount = Number(
+    document.querySelector(`.js-quantity-${productId}`).value
+  );
+  if (amount < 0 || amount >= 100) {
+    alert("Quantity must be at least 0 and less than 100");
+    return;
+  }
+  container.classList.remove("is-editing-quantity");
+  calcCartQuantity(productId, amount);
+  updateCartQuantity("items");
+  updateCartQuantity("quantity");
 }
