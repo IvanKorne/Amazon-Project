@@ -110,3 +110,14 @@ export function saveUpdate(saveButton) {
   updateCartQuantity("items");
   updateCartQuantity("quantity");
 }
+
+export function updateDelivery(productId, deliveryOptionId) {
+  let matchingItem;
+  cart.forEach((item) => {
+    if (item.productId === productId) {
+      matchingItem = item;
+    }
+  });
+  matchingItem.deliveryOptionId = deliveryOptionId;
+  saveStorage();
+}
