@@ -1,5 +1,6 @@
 import { renderOrder } from "../scripts/checkout/order.js";
 import { renderPayment } from "../scripts/checkout/payment.js";
+import { renderHeader } from "../scripts/checkout/checkoutHeader.js";
 
 export let cart = JSON.parse(localStorage.getItem("cart")) || [
   {
@@ -112,6 +113,7 @@ export function saveUpdate(saveButton) {
   calcCartQuantity(productId, amount);
   renderOrder();
   renderPayment();
+  renderHeader();
 }
 
 export function updateDelivery(productId, deliveryOptionId) {

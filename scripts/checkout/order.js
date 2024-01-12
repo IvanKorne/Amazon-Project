@@ -7,9 +7,9 @@ import {
 } from "../../data/cart.js";
 import { productsData, getMatch } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
-import { deliveryOptions, getDelivery } from "../../data/delivery.js";
-import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { deliveryOptions, getDelivery, getDate } from "../../data/delivery.js";
 import { renderPayment } from "./payment.js";
+import { renderHeader } from "./checkoutHeader.js";
 
 export function renderOrder() {
   let checkoutHTML = "";
@@ -24,9 +24,7 @@ export function renderOrder() {
 
     const deliveryOption = getDelivery(deliveryOptionId);
 
-    const today = dayjs();
-    const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
-    const dateString = deliveryDate.format("dddd, MMMM D");
+    const dateString = getDate(deliveryOption);
 
     checkoutHTML += `<div class="cart-item-container js-cart-container-${
       matchingItem.id
@@ -85,11 +83,9 @@ export function renderOrder() {
       const { productId } = deleteButton.dataset;
       removeItem(productId);
 
-      const containter = document.querySelector(
-        `.js-cart-container-${productId}`
-      );
-      containter.remove();
-      updateCartQuantity("items");
+      renderPayment();
+      renderHeader();
+      renderOrder();
     });
   });
 
@@ -117,9 +113,7 @@ export function renderOrder() {
     let deliveryHTML = "";
 
     deliveryOptions.forEach((option) => {
-      const today = dayjs();
-      const deliveryDate = today.add(option.deliveryDays, "days");
-      const dateString = deliveryDate.format("dddd, MMMM D");
+      const dateString = getDate(option);
       const priceString =
         option.priceCents === 0
           ? "FREE"
