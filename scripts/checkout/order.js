@@ -5,9 +5,9 @@ import {
   saveUpdate,
   updateDelivery,
 } from "../../data/cart.js";
-import { productsData } from "../../data/products.js";
+import { productsData, getMatch } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
-import { deliveryOptions } from "../../data/delivery.js";
+import { deliveryOptions, getDelivery } from "../../data/delivery.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 
 export function renderOrder() {
@@ -17,23 +17,11 @@ export function renderOrder() {
     const productId = cartItem.productId;
 
     // Generate the correct item to display
-    let matchingItem;
-
-    productsData.forEach((product) => {
-      if (product.id === productId) {
-        matchingItem = product;
-      }
-    });
+    const matchingItem = getMatch(productId);
 
     const deliveryOptionId = cartItem.deliveryOptionId;
 
-    let deliveryOption;
-
-    deliveryOptions.forEach((option) => {
-      if (option.id === deliveryOptionId) {
-        deliveryOption = option;
-      }
-    });
+    const deliveryOption = getDelivery(deliveryOptionId);
 
     const today = dayjs();
     const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
@@ -90,7 +78,7 @@ export function renderOrder() {
   document.querySelector(".js-order").innerHTML = checkoutHTML;
   updateCartQuantity("items");
 
-  //Makes Delte buttons interactive
+  //Makes Delete buttons interactive
   let deleteButtons = document.querySelectorAll(".js-delete");
   deleteButtons.forEach((deleteButton) => {
     deleteButton.addEventListener("click", () => {
