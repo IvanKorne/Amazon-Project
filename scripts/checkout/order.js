@@ -9,6 +9,7 @@ import { productsData, getMatch } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { deliveryOptions, getDelivery } from "../../data/delivery.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { renderPayment } from "./payment.js";
 
 export function renderOrder() {
   let checkoutHTML = "";
@@ -76,7 +77,6 @@ export function renderOrder() {
 
   // Puts HTML into checkout page via DOM
   document.querySelector(".js-order").innerHTML = checkoutHTML;
-  updateCartQuantity("items");
 
   //Makes Delete buttons interactive
   let deleteButtons = document.querySelectorAll(".js-delete");
@@ -109,11 +109,6 @@ export function renderOrder() {
   saveButtons.forEach((saveButton) => {
     saveButton.addEventListener("click", () => {
       saveUpdate(saveButton);
-    });
-    document.body.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        saveUpdate(saveButton);
-      }
     });
   });
 
@@ -157,6 +152,7 @@ export function renderOrder() {
 
       updateDelivery(productId, deliveryOptionId);
       renderOrder();
+      renderPayment();
     });
   });
 }

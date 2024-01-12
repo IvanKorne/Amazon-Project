@@ -1,3 +1,6 @@
+import { renderOrder } from "../scripts/checkout/order.js";
+import { renderPayment } from "../scripts/checkout/payment.js";
+
 export let cart = JSON.parse(localStorage.getItem("cart")) || [
   {
     productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -107,8 +110,8 @@ export function saveUpdate(saveButton) {
   }
   container.classList.remove("is-editing-quantity");
   calcCartQuantity(productId, amount);
-  updateCartQuantity("items");
-  updateCartQuantity("quantity");
+  renderOrder();
+  renderPayment();
 }
 
 export function updateDelivery(productId, deliveryOptionId) {
