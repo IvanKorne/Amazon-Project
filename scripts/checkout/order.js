@@ -26,7 +26,7 @@ export function renderOrder() {
 
     const dateString = getDate(deliveryOption);
 
-    checkoutHTML += `<div class="cart-item-container js-cart-container-${
+    checkoutHTML += `<div class="cart-item-container js-cart-container js-cart-container-${
       matchingItem.id
     }">
       <div class="delivery-date">Delivery date: ${dateString}</div>
@@ -42,7 +42,7 @@ export function renderOrder() {
           <div class="product-price">$${formatCurrency(
             matchingItem.priceCents
           )}</div>
-          <div class="product-quantity">
+          <div class="product-quantity js-product-quantitiy-${matchingItem.id}">
             <span> Quantity: <span class="quantity-label js-quantity">${
               cartItem.quantity
             }</span> </span>
